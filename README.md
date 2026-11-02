@@ -1,3 +1,11 @@
-# first_tool
-# 2026_Codyssey_leading_1st
-# 내 컴퓨터에 개발자용 '작업실' 꾸미기
+# Codyssey all in one GN 1st 2026
+미션목표요약
+# 실행환경
+
+# 수행 체크리스트
+
+# 검증방법
+
+# 트러블슈팅_1
+
+# 트러블슈팅_2
