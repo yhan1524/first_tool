@@ -61,8 +61,22 @@ New-Item -ItemType File 파일명(빈 파일 생성)
 ![빈파일 생성](screenshot/bin.png)
 
 ## 5. 권한 실습
+icacls(권한 확인)
+![권한 확인](screenshot/chmod.png)
+
+/grant:r(권한 변경)
+![권한 변경](screenshot/grant1.png)
+![권한 변경](screenshot/grant2.png)
+
 ## 6. Docker 설치 및 점검
+docker --version
+![버전확인](screenshot/dockerver.png)
+
+docker info
+![동작여부확인](screenshot/dockerinfo.png)
+
 ## 7. Docker 기본 운영 명령
+
 ## 8. 커스텀 이미지 제작
 ## 9. 포트 매핑 검증
 ## 10. 바인드 마운트 검증
