@@ -1,97 +1,72 @@
-# Dev Workstation Mission
+# 개발 워크스테이션 구축
 
-Docker, terminal, and Git practice project using **NGINX** and a static HTML page.
+## 1. 프로젝트 개요
+- 터미널, Docker, Git/GitHub를 사용해 재현 가능한 개발 환경 구축
 
-## 1. Project Overview
-This project demonstrates the following:
-- Build a Docker image with a `Dockerfile`
-- Run a container from the built image
-- Map host port to container port
-- Serve a custom `index.html` page with NGINX
-- Practice bind mount and Docker volume usage
-- Prepare evidence files for submission
+## 2. 실행 환경
+- OS: Windows_NT
+- Shell: 5.1.26100.9711
+- Docker version: 29.9.2, build a82e528
+- Git version: 2.56.0.windows.4
 
-## 2. Project Structure
-```text
-dev-workstation-mission/
-├─ Dockerfile
-├─ app/
-│  └─ index.html
-├─ commands.md
-├─ README.md
-├─ README_snippet.md
-└─ CAPTURE_CHECKLIST.md
-```
+## 3. 수행 항목 체크리스트
+- [ ] 터미널 기본 조작
+- [ ] 파일/디렉토리 권한 실습
+- [ ] Docker 설치 및 점검
+- [ ] Docker 기본 운영 명령
+- [ ] hello-world 실행
+- [ ] ubuntu 컨테이너 진입
+- [ ] Dockerfile 기반 커스텀 이미지 빌드
+- [ ] 포트 매핑 접속 확인
+- [ ] 바인드 마운트 반영 확인
+- [ ] Docker 볼륨 영속성 확인
+- [ ] Git 설정
+- [ ] GitHub/VSCode 연동
 
-## 3. Dockerfile
-```dockerfile
-FROM nginx:alpine
-COPY app/index.html /usr/share/nginx/html/index.html
-EXPOSE 80
-```
+## 4. 터미널 조작 로그
+Get-Location(현재위치 확인)
+![현재위치 확인](screenshot/pwd.png)
 
-## 4. Build and Run
+ls -Force(목록확인) *Get-ChildItem -Force
+![목록 확인](screenshot/ls.png)
 
-### Build image
-```bash
-docker build -t my-nginx-app .
-```
+Set-Location 폴더명(이동) *cd 폴더명
+![폴더 이동](screenshot/cd.png)
+*상위 폴더로 이동은 cd ..
+![폴더 이동](screenshot/cd_up.png)
 
-### Run container
-```bash
-docker run -d --name my-nginx-container -p 8080:80 my-nginx-app
-```
+New-Item -ItemType Directory 폴더명(폴더 만들기)
+![폴더 만들기](screenshot/newfolder.png)
 
-### Verify
-```bash
-docker ps
-```
+New-Item -ItemType File 파일명(파일 만들기)
+![파일 만들기](screenshot/newfile.png)
 
-Then open:
-- http://localhost:8080
+Copy-Item a b (복사)
+![복사](screenshot/copy.png)
+폴더 안의 내용까지 복사는 뒤에  -Recurse를 붙인다
 
-## 5. Bind Mount Example
-Use local file directly inside a container:
-```bash
-docker run -d --name my-nginx-bind -p 8081:80   -v ${PWD}/app/index.html:/usr/share/nginx/html/index.html:ro   nginx:alpine
-```
+Move-Item 원본 대상경로(이동)
+![이동](screenshot/move.png)
 
-## 6. Volume Example
-Create and use a Docker volume:
-```bash
-docker volume create my-nginx-data
+Rename-Item 기존이름 새이름(이름변경)
+![이름변경](screenshot/rename.png)
 
-docker run -d --name my-nginx-volume -p 8082:80   -v my-nginx-data:/usr/share/nginx/html   nginx:alpine
-```
+Remove-Item 파일명(삭제)
+![삭제](screenshot/remove.png)
 
-## 7. Useful Commands
-```bash
-docker images
-docker ps -a
-docker volume ls
-docker stop my-nginx-container
-docker rm my-nginx-container
-```
+Get-Content 파일명(파일 내용 확인) *cat 파일명
+![파일내용확인](screenshot/cat.png)
 
-## 8. Submission Tips
-- Include terminal screenshots for build and run commands
-- Include browser screenshot showing the page result
-- Include `docker ps` and `docker images` output
-- Include bind mount / volume proof if required by the assignment
-- Use `CAPTURE_CHECKLIST.md` before final submission
+New-Item -ItemType File 파일명(빈 파일 생성)
+![빈파일 생성](screenshot/bin.png)
 
-## 9. GitHub Upload Guide
-```bash
-git init
-git add .
-git commit -m "Add dev workstation mission files"
-git branch -M main
-git remote add origin <YOUR_REPOSITORY_URL>
-git push -u origin main
-```
-
-Replace `<YOUR_REPOSITORY_URL>` with your actual repository URL.
-
-## 10. Expected Result
-A working NGINX container should serve the custom HTML page through:
-- `http://localhost:8080`
+## 5. 권한 실습
+## 6. Docker 설치 및 점검
+## 7. Docker 기본 운영 명령
+## 8. 커스텀 이미지 제작
+## 9. 포트 매핑 검증
+## 10. 바인드 마운트 검증
+## 11. Docker 볼륨 영속성 검증
+## 12. Git 설정 및 GitHub 연동
+## 13. 트러블슈팅
+## 14. 핵심 개념 정리
