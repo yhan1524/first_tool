@@ -1,36 +1,97 @@
-# Codyssey all in one GN 1st 2026
-- 개발워크스테이션 구축
-- 터미널, Docker, Git/GitHub를 사용해 재현 가능한 개발 환경 구축
+# Dev Workstation Mission
 
-# 실행환경
-- OS:
-- Shell:
-- Terminal:
-- Docker version:
-- Git version:
+Docker, terminal, and Git practice project using **NGINX** and a static HTML page.
 
-# 수행 체크리스트
-- [ ] 터미널 기본 조작
-- [ ] 파일/디렉토리 권한 실습
-- [ ] Docker 설치 및 점검
-- [ ] Docker 기본 운영 명령
-- [ ] hello-world 실행
-- [ ] ubuntu 컨테이너 진입
-- [ ] Dockerfile 기반 커스텀 이미지 빌드
-- [ ] 포트 매핑 접속 확인
-- [ ] 바인드 마운트 반영 확인
-- [ ] Docker 볼륨 영속성 확인
-- [ ] Git 설정
-- [ ] GitHub/VSCode 연동
+## 1. Project Overview
+This project demonstrates the following:
+- Build a Docker image with a `Dockerfile`
+- Run a container from the built image
+- Map host port to container port
+- Serve a custom `index.html` page with NGINX
+- Practice bind mount and Docker volume usage
+- Prepare evidence files for submission
 
-# 터미널 조작 로그
-# 권한 실습
-# Docker 설치 및 점검
-# Docker 기본 운영 명령
-# 커스텀 이미지 제작
-# 포트 매핑 검증
-# 바인드 마운트 검증
-# Docker 볼륨 영속성 검증
-# Git 설정 및 GitHub 연동
-# 트러블슈팅
-# 핵심 개념 정리
+## 2. Project Structure
+```text
+dev-workstation-mission/
+├─ Dockerfile
+├─ app/
+│  └─ index.html
+├─ commands.md
+├─ README.md
+├─ README_snippet.md
+└─ CAPTURE_CHECKLIST.md
+```
+
+## 3. Dockerfile
+```dockerfile
+FROM nginx:alpine
+COPY app/index.html /usr/share/nginx/html/index.html
+EXPOSE 80
+```
+
+## 4. Build and Run
+
+### Build image
+```bash
+docker build -t my-nginx-app .
+```
+
+### Run container
+```bash
+docker run -d --name my-nginx-container -p 8080:80 my-nginx-app
+```
+
+### Verify
+```bash
+docker ps
+```
+
+Then open:
+- http://localhost:8080
+
+## 5. Bind Mount Example
+Use local file directly inside a container:
+```bash
+docker run -d --name my-nginx-bind -p 8081:80   -v ${PWD}/app/index.html:/usr/share/nginx/html/index.html:ro   nginx:alpine
+```
+
+## 6. Volume Example
+Create and use a Docker volume:
+```bash
+docker volume create my-nginx-data
+
+docker run -d --name my-nginx-volume -p 8082:80   -v my-nginx-data:/usr/share/nginx/html   nginx:alpine
+```
+
+## 7. Useful Commands
+```bash
+docker images
+docker ps -a
+docker volume ls
+docker stop my-nginx-container
+docker rm my-nginx-container
+```
+
+## 8. Submission Tips
+- Include terminal screenshots for build and run commands
+- Include browser screenshot showing the page result
+- Include `docker ps` and `docker images` output
+- Include bind mount / volume proof if required by the assignment
+- Use `CAPTURE_CHECKLIST.md` before final submission
+
+## 9. GitHub Upload Guide
+```bash
+git init
+git add .
+git commit -m "Add dev workstation mission files"
+git branch -M main
+git remote add origin <YOUR_REPOSITORY_URL>
+git push -u origin main
+```
+
+Replace `<YOUR_REPOSITORY_URL>` with your actual repository URL.
+
+## 10. Expected Result
+A working NGINX container should serve the custom HTML page through:
+- `http://localhost:8080`
