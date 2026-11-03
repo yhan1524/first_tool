@@ -183,7 +183,7 @@ chmod [권한] [파일명]
 
 ![권한 변경](assets/unixchmod.png)
 
-- [**권한에 관한 설명**](## 14. rwx Permission Mapping)
+- [**권한에 관한 설명**](#14-rwx-permission-mapping)
 ---
 
 
