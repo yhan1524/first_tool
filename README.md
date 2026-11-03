@@ -310,7 +310,7 @@ git push -u origin main
 
 ![git 연동 확인](assets/gitlist.png)
 
-## 12. 이미지와 컨테이너
+## 11. 이미지와 컨테이너
 
 ### 이미지와 컨테이너의 차이
 - **이미지(Image)**: 컨테이너를 만들기 위한 실행 템플릿
@@ -324,7 +324,7 @@ git push -u origin main
 4. 컨테이너 내부에서 파일을 변경하면, 그 변경은 기본적으로 해당 컨테이너에만 반영된다.
 5. 변경 내용을 보존하려면 다시 이미지로 빌드하거나 볼륨을 사용해야 한다.
 
-### 정리 표
+### 비교
 ```
 ┌──────────────────────┐
 │      Docker Image    │
@@ -354,7 +354,7 @@ git push -u origin main
 
 ---
 
-## 13. Network Namespace and Port Forwarding
+## 12. Network Namespace and Port Forwarding
 
 ### 네트워크 네임스페이스
 네트워크 네임스페이스는 충돌 방지, 보안, 독립성 확보를 위해 필요하다
@@ -373,7 +373,7 @@ docker run -p 8080:80 myimage
 - **내 PC의 8080번 포트로 들어온 요청을 컨테이너의 80번 포트로 보냄**
 ---
 
-## 14. Absolute vs Relative Path
+## 13. Absolute vs Relative Path
 
 ### 절대경로와 상대경로
 - **절대경로**: 루트(`/`)부터 시작하는 고정 경로
@@ -394,7 +394,7 @@ docker run -p 8080:80 myimage
 
 ---
 
-## 15. rwx Permission Mapping
+## 14. rwx Permission Mapping
 
 ### 권한 비트 의미
 - `r` = read(읽기)
@@ -429,7 +429,7 @@ ls -l script.sh
 
 ---
 
-## 16. Port Conflict Troubleshooting
+## 15. Port Conflict Troubleshooting
 
 ### 포트 충돌 진단 순서
 1. 포트가 사용 중인지 확인한다.
@@ -469,7 +469,7 @@ lsof -i :8080
 
 ---
 
-## 17. Bind Mount vs Docker Volume
+## 16. Bind Mount vs Docker Volume
 
 ### 비교 표
 | 항목 | 바인드 마운트 | Docker 볼륨 |
@@ -494,9 +494,9 @@ docker run -v myvolume:/app/data myimage
 
 ---
 
-## 18. Troubleshooting Case
+## 17. Troubleshooting Case
 
-### 18-1. 컨테이너 포트 접속 실패
+### 17-1. 컨테이너 포트 접속 실패
 
 - **문제 상황**: 브라우저에서 `http://localhost:8080` 접속이 되지 않는다.
 - **가설**: 호스트의 `8080` 포트가 이미 사용 중이라 컨테이너가 포트 바인딩에 실패했을 것이다.
@@ -510,7 +510,7 @@ lsof -i :8080
 
 ---
 
-### 18-2. 컨테이너가 실행되지 않음
+### 17-2. 컨테이너가 실행되지 않음
 
 - **문제 상황**: 컨테이너를 실행했지만 바로 종료된다.
 - **가설**: 실행 명령어나 설정 오류로 인해 컨테이너가 정상적으로 시작되지 않았을 것이다.
@@ -525,7 +525,7 @@ docker logs <container_id>
 
 ---
 
-### 18-3. 웹 페이지가 열리지 않음
+### 17-3. 웹 페이지가 열리지 않음
 
 - **문제 상황**: 컨테이너는 실행 중이지만 외부에서 접속이 되지 않는다.
 - **가설**: 애플리케이션이 `0.0.0.0`이 아니라 `localhost`에만 바인딩되어 있을 것이다.
@@ -545,7 +545,7 @@ docker logs <container_id>
 
 ---
 
-### 18-4. 데이터베이스 연결 실패
+### 17-4. 데이터베이스 연결 실패
 
 - **문제 상황**: 애플리케이션이 DB에 연결되지 않는다.
 - **가설**: DB 호스트명 또는 포트 설정이 잘못되어 연결에 실패했을 것이다.
@@ -565,7 +565,7 @@ docker exec -it <container_id> nc -zv <db_host> 5432
 
 ---
 
-### 18-5. 빌드는 성공했지만 실행 시 에러 발생
+### 17-5. 빌드는 성공했지만 실행 시 에러 발생
 
 - **문제 상황**: 이미지는 잘 빌드되었지만 실행하면 오류가 난다.
 - **가설**: 환경변수나 설정 파일이 누락되어 실행에 필요한 값이 없을 것이다.
