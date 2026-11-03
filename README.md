@@ -170,15 +170,15 @@ chmod 755 example.sh
 ls -l example.sh
 ```
 
-![권한 확인](assets/chmod.png)
+![권한 확인](assets/unixls.png)
 
 ### 5-1-2. 권한 변경
 ```powershell
 chmod [권한] [파일명]
 ```
 
-![권한 변경](assets/grant1.png)
-![권한 변경](assets/grant2.png)
+![권한 변경](assets/unixchmod.png)
+
 - **권한에 관한 설명은 하단에 후술**
 ---
 
