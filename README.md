@@ -166,11 +166,15 @@ icacls
 ---
 ### 5-1-1. 권한 확인(unix)
 ```
-chmod 755 example.sh
-ls -l example.sh
+chmod 755 example.sh    //파일생성
+ls -l example.sh        //권한확인
 ```
 
 ![권한 확인](assets/unixls.png)
+- 파일종류(-)       // (-) 일반파일 (d) 디렉터리
+- 소유자권한(rwx)   // 읽기·쓰기·실행
+- 그룹권한(xr)      // 실행·읽기 
+- 기타사용자권한(x)  // 실행
 
 ### 5-1-2. 권한 변경
 ```powershell
@@ -179,7 +183,7 @@ chmod [권한] [파일명]
 
 ![권한 변경](assets/unixchmod.png)
 
-- **권한에 관한 설명은 하단에 후술**
+- **권한에 관한 설명**(## 14. rwx Permission Mapping)
 ---
 
 
