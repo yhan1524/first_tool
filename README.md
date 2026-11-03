@@ -77,6 +77,29 @@ docker info
 
 ## 7. Docker 기본 운영 명령
 
+docker run hello-world
+![helld-world 생성](screenshot/dockerhello.png)
+
+docker images
+docker ps -a
+![이미지 및 목록 확인](screenshot/dockerimg.png)
+
+docker run -it ubuntu bash
+![ubuntu 컨테이너 실행 및 진입](screenshot/dockerbash.png)
+
+ls, echo exit
+![컨테이너 진입 후 간단 명령](screenshot/dockerls.png)
+
+docker run -d --name my-nginx-container -p 8080:80 
+![포트매핑 실행명령](screenshot/dockermapping.png)
+
+curl http://localhost:8080 
+![호스트 포트 접속](screenshot/dockercurl.png)
+
+docker volume create my-nginx-data
+docker run -d --name my-nginx-volume -p 8082:80   -v my-nginx-data:/usr/share/nginx/html   nginx:alpine
+![Docker 볼륨 생성 및 ](screenshot/dockercurl.png)
+
 ## 8. 커스텀 이미지 제작
 ## 9. 포트 매핑 검증
 ## 10. 바인드 마운트 검증
