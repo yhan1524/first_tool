@@ -23,6 +23,9 @@ first_tool/
    └─ index.html
 └─ assets/
 ```
+단순하게 나누어 저장함
+'assets/' 출력할 실행 증거 이미지모음
+'app/' index 파일
 ---
 
 ## 3. 수행 항목 체크리스트
