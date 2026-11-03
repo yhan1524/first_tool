@@ -87,23 +87,34 @@ docker ps -a
 docker run -it ubuntu bash
 ![ubuntu 컨테이너 실행 및 진입](screenshot/dockerbash.png)
 
-ls, echo exit
+ls, echo exitcur
 ![컨테이너 진입 후 간단 명령](screenshot/dockerls.png)
 
 docker run -d --name my-nginx-container -p 8080:80 
 ![포트매핑 실행명령](screenshot/dockermapping.png)
 
+## 8. 포트 매핑 접속증거
 curl http://localhost:8080 
 ![호스트 포트 접속](screenshot/dockercurl.png)
 
-docker volume create my-nginx-data
-docker run -d --name my-nginx-volume -p 8082:80   -v my-nginx-data:/usr/share/nginx/html   nginx:alpine
-![Docker 볼륨 생성 및 ](screenshot/dockercurl.png)
+## 9. Docker 볼륨 영속성 검증
 
-## 8. 커스텀 이미지 제작
-## 9. 포트 매핑 검증
-## 10. 바인드 마운트 검증
-## 11. Docker 볼륨 영속성 검증
-## 12. Git 설정 및 GitHub 연동
-## 13. 트러블슈팅
-## 14. 핵심 개념 정리
+docker volume create my-nginx-volume
+docker run -d --name my-nginx-container -p 8082:80 -v my-nginx-volume:/usr/share/nginx/html nginx:alpine
+![볼륨생성과 볼륨마운트](screenshot/dockervolumemake.png)
+
+docker stop my-nginx-container *컨테이너 중지
+docker rm my-nginx-container   *컨테이너 삭제
+docker volume ls *볼륨 확인
+docker run -d --name my-nginx-new -p 8082:80 -v my-nginx-volume:/usr/share/nginx/html nginx:alpine *같은 볼륨으로 새 컨테이너 생성
+docker exec my-nginx-new cat /usr/share/nginx/html/index.html *파일이 그대로 있는지 확인
+![데이터 유지 실행결과](screenshot/dockervolume.png)
+
+## 10. Git 설정 및 GitHub 연동
+git config --global user.name
+git config --global user.email
+git config --global init.defaultBranch main
+got add .
+git commit -m 
+git push
+![git 연동 확인](screenshot/gitlist.png)
