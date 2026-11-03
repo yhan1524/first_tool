@@ -24,8 +24,8 @@ first_tool/
 └─ assets/
 ```
 단순하게 나누어 저장함
-'assets/' 출력할 실행 증거 이미지모음
-'app/' index 파일
+- 'assets/' 출력할 실행 증거 이미지모음
+- 'app/' index 파일
 
 ---
 
