@@ -39,7 +39,6 @@
 ```powershell
 Get-Location
 ```
-(현재위치 확인)
 
 ![현재위치 확인](screenshot/pwd.png)
 
