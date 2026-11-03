@@ -148,14 +148,14 @@ New-Item -ItemType File 파일명
 
 ## 5. 권한 실습
 
-### 5-1. 권한 확인
+### 5-1-1. 권한 확인(windows)
 ```powershell
 icacls
 ```
 
 ![권한 확인](assets/chmod.png)
 
-### 5-2. 권한 변경
+### 5-1-2. 권한 변경
 ```powershell
 /grant:r
 ```
@@ -164,6 +164,24 @@ icacls
 ![권한 변경](assets/grant2.png)
 
 ---
+### 5-1-1. 권한 확인(unix)
+```
+chmod 755 example.sh
+ls -l example.sh
+```
+
+![권한 확인](assets/chmod.png)
+
+### 5-1-2. 권한 변경
+```powershell
+chmod [권한] [파일명]
+```
+
+![권한 변경](assets/grant1.png)
+![권한 변경](assets/grant2.png)
+- **권한에 관한 설명은 하단에 후술**
+---
+
 
 ## 6. Docker 설치 및 점검
 
