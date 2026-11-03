@@ -174,6 +174,13 @@ docker info
 
 ![동작여부확인](assets/dockerinfo.png)
 
+### 6-3. 빌드 실행
+```bash
+docker build -t nginx-alpine .
+```
+
+![빌드실행](assets/dockerbild.png)
+
 ---
 
 ## 7. Docker 기본 운영 명령
@@ -258,14 +265,22 @@ docker exec my-nginx-new cat /usr/share/nginx/html/index.html
 ---
 
 ## 10. Git 설정 및 GitHub 연동
-
+### Git 설정
 ```bash
 git config --global user.name
 git config --global user.email
 git config --global init.defaultBranch main
+```
+### GitHub 원격 저장소 연결
+```
+git remote add origin https://github.com/username/repository.git
+git remote -v
+```
+### 커밋 및 푸시
+```
 git add .
 git commit -m "commit message"
-git push
+git push -u origin main
 ```
 
 ![git 연동 확인](assets/gitlist.png)
