@@ -15,7 +15,12 @@
 | Git version | 2.56.0.windows.4 |
 
 ### 2-1 프로젝트 디렉토리 구조
-
+first_tool/
+├─ README.md
+├─ Dockerfile
+├─ app/
+   └─ index.html
+└─ assets/
 ---
 
 ## 3. 수행 항목 체크리스트
