@@ -475,7 +475,7 @@ ls -l script.sh
 ```bash
 lsof -i :8080
 ```
-- Windows 환경에서 확인 
+Windows 환경에서 확인 
 ```
 netstat -ano | findstr :8080    
 ```
@@ -488,7 +488,7 @@ TCP    10.70.102.112:55552    10.60.30.12:8080       ESTABLISHED     1234
 ```
 ps -p 1234 -f
 ```
-- Windows 환경에서 확인 
+Windows 환경에서 확인 
 ```
 tasklist /FI "PID eq 1234"
 ```
@@ -503,7 +503,7 @@ kill 1234
 ```bash
 kill -9 1234
 ```
-- Windows 환경에서 종료(/F: 강제종료)
+Windows 환경에서 종료(/F: 강제종료)
 ```
 taskkill /PID 1234 /F
 ```
@@ -512,7 +512,7 @@ taskkill /PID 1234 /F
 ```bash
 lsof -i :8080
 ```
-- Windows 환경에서 확인 
+Windows 환경에서 확인 
 ```
 netstat -ano | findstr :8080    
 ```
