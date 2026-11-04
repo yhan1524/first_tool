@@ -252,7 +252,7 @@ docker run -d --name my-nginx-container -p 8080:80
 ```
 
 ![포트매핑 실행명령](assets/dockermapping.png)
-![포트매핑 실행명령2](assets/pt8080.png)
+
 ---
 
 ## 8. 포트 매핑 접속증거
@@ -263,6 +263,7 @@ curl http://localhost:8080
 ```
 
 ![호스트 포트 접속](assets/dockercurl.png)
+![웹확인](assets/pt8080.png)
 
 ---
 
