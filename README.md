@@ -525,6 +525,12 @@ docker run -v $(pwd)/data:/app/data myimage
 # Docker 볼륨
 docker run -v myvolume:/app/data myimage
 ```
+- 개발환경: <br>
+바인드 마운트 우선, 내 PC 소스코드를 컨테이너에 바로 반영하기 위함<br>
+볼륨은 컨테이너를 지워도 데이터가 남아야 할 때 사용함
+- 운영환경: <br>
+볼륨 우선, 호스트의 의존성을 줄이고 데이터의 안정적 저장·백업·이관이 쉬움 <br>
+호스트의 특정 경로를 직접 써야할 때 바인드 마운트를 사용할 수 있음
 
 ---
 
