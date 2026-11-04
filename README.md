@@ -467,7 +467,9 @@ ls -l script.sh
 ---
 
 ## 15. Port Conflict Troubleshooting
-
+```
+Error response from daemon: driver failed programming external connectivity on endpoint second-nginx (...): Bind for 0.0.0.0:8080 failed: port is already allocated
+```
 ### 포트 충돌 진단 순서
 1. 포트가 사용 중인지 확인한다.
 2. 해당 포트를 점유한 프로세스를 찾는다.
