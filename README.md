@@ -252,7 +252,7 @@ docker run -d --name my-nginx-container -p 8080:80
 ```
 
 ![포트매핑 실행명령](assets/dockermapping.png)
-
+![포트매핑 실행명령2](assets/pt8080.png)
 ---
 
 ## 8. 포트 매핑 접속증거
