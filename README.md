@@ -475,12 +475,24 @@ ls -l script.sh
 ```bash
 lsof -i :8080
 ```
-
+- Windows 환경에서 확인 
+```
+netstat -ano | findstr :8080    
+```
 ### 예시 출력
 ```text
-COMMAND   PID USER   FD   TYPE DEVICE SIZE/OFF NODE NAME
-python3  1234 user    3u  IPv4  ...        TCP *:8080 (LISTEN)
+TCP    10.70.102.112:55552    10.60.30.12:8080       ESTABLISHED     1234
 ```
+- PID : 1234
+### 해당 PID가 어떤 프로세스인지 확인
+```
+ps -p 1234 -f
+```
+- Windows 환경에서 확인 
+```
+tasklist /FI "PID eq 1234"
+```
+
 
 ### 프로세스 종료
 ```bash
@@ -491,10 +503,18 @@ kill 1234
 ```bash
 kill -9 1234
 ```
+- Windows 환경에서 종료(/F: 강제종료)
+```
+taskkill /PID 1234 /F
+```
 
 ### 재확인
 ```bash
 lsof -i :8080
+```
+- Windows 환경에서 확인 
+```
+netstat -ano | findstr :8080    
 ```
 
 ### 정리
@@ -527,7 +547,8 @@ docker run -v myvolume:/app/data myimage
 ```
 - 개발환경: <br>
 바인드 마운트 우선, 내 PC 소스코드를 컨테이너에 바로 반영하기 위함<br>
-볼륨은 컨테이너를 지워도 데이터가 남아야 할 때 사용함
+볼륨은 컨테이너를 지워도 데이터가 남아야 할 때 사용함<br>
+
 - 운영환경: <br>
 볼륨 우선, 호스트의 의존성을 줄이고 데이터의 안정적 저장·백업·이관이 쉬움 <br>
 호스트의 특정 경로를 직접 써야할 때 바인드 마운트를 사용할 수 있음
