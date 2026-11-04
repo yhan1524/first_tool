@@ -460,6 +460,9 @@ echo "hello" > "${PWD}/result.txt"    //Bash
 chmod 755 script.sh
 ls -l script.sh
 ```
+자주 쓰는 권한
+- 755: 실행파일, 스크립트, 디렉터리에 자주 사용
+- 644: 일반문서, 설정 파일에 자주 사용
 
 ---
 
