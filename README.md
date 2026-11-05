@@ -407,7 +407,7 @@ git push
 
 ![git 연동 확인](assets/gitlist.png)
 
-### GitHub 에서 컴퓨터로 가져오기
+### GitHub 에서 컴퓨터로 가져오기(간단)
 ```bash
 git config --global user.name
 git config --global user.email
