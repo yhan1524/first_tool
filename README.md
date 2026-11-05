@@ -407,8 +407,14 @@ git push
 
 ![git 연동 확인](assets/gitlist.png)
 
-### GitHub 주소
+### GitHub 에서 컴퓨터로 가져오기
+```bash
+git config --global user.name
+git config --global user.email
+git clone (githu주소)
+```
 
+### GitHub 주소
 https://github.com/yhan1524/first_tool
 
 ## 11. 이미지와 컨테이너
