@@ -747,3 +747,14 @@ docker logs <container_id>
 ```
 
 - **확인 포인트**: 필요한 환경변수가 설정되어 있는지, 로그에 설정 누락 메시지가 있는지 확인한다.
+
+
+## 보너스 문제(선택)
+
+### Docker Compose 기초
+매번 긴 docker run 명령을 입력하는 대신, 실행 설정을 docker-compose.yml에 문서화
+
+### Docker Compose 멀티 컨테이너
+### Compose 운영 명령어 습득
+### 환경 변수 활용
+### GitHub SSH 키 설정
