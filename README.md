@@ -269,7 +269,7 @@ mkdir test    // test 폴더 생성
 
 ### 7-5. 포트매핑 실행명령
 ```bash
-docker run -d --name my-nginx-container -p 8080:80
+docker run -d --name (컨테이너 이름) -p 8080:80
 ```
 
 ![포트매핑 실행명령](assets/dockermapping.png)
