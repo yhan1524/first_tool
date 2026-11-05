@@ -411,8 +411,9 @@ git push
 ```bash
 git config --global user.name
 git config --global user.email
-git clone (githu주소)
+git clone (github주소)
 ```
+![복사하기](assets/gitclone.png)
 
 ### GitHub 주소
 https://github.com/yhan1524/first_tool
