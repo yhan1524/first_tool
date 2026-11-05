@@ -458,6 +458,7 @@ docker run -p 8080:80 myimage
 ```
 echo "hello" > "${PWD}/result.txt"    //Bash
 "hello" | Out-File "$($PWD.Path)\result.txt"   //powershell
+```
 ---
 
 ## 14. rwx Permission Mapping
