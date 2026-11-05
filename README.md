@@ -166,8 +166,8 @@ icacls
 ![권한 변경](assets/grant2.png)
 
 ---
-### 5-1-1. 권한 확인(unix)
-```
+### 5-2-1. 권한 확인(unix)
+```bash
 chmod 755 example.sh    //파일생성
 ls -l example.sh        //권한확인
 ```
@@ -178,8 +178,8 @@ ls -l example.sh        //권한확인
 - 그룹권한(xr)      // 실행·읽기 
 - 기타사용자권한(x)  // 실행
 
-### 5-1-2. 권한 변경
-```powershell
+### 5-2-2. 권한 변경
+```bash
 chmod [권한] [파일명]
 ```
 
