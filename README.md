@@ -331,14 +331,21 @@ git remote -v
 ```
 ### 커밋 및 푸시
 ```
-git add .
+git add .                       // 한번에 커밋하기
 git commit -m "commit message"
 git push -u origin main
+```
+README 파일만 수정하는 경우
+```
+git add README.md          // add 뒤에 수정하고자 하는 파일명 입력
+git commit -m "readme수정"
+git push
 ```
 
 ![git 연동 확인](assets/gitlist.png)
 
-###GitHub 주소
+### GitHub 주소
+
 https://github.com/yhan1524/first_tool
 
 ## 11. 이미지와 컨테이너
