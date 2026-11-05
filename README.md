@@ -282,8 +282,13 @@ docker run -d --name my-nginx-container -p 8080:80
 ```bash
 curl http://localhost:8080
 ```
+- 웹 서버 베이스 이미지 활용 NGINX/Apache
+- html 수정만 하면 되므로 간단
 
 ![호스트 포트 접속](assets/dockercurl.png)
+
+NGINX 컨테이너에서 띄운 CSS로 가운데 정렬된 카드 형태로 꾸며진 정적 웹페이지
+
 ![웹확인](assets/pt8080.png)
 
 ---
