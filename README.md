@@ -59,6 +59,9 @@ first_tool/
 ```powershell
 Get-Location
 ```
+```bash
+pwd
+```
 
 ![현재위치 확인](assets/pwd.png)
 
@@ -66,7 +69,10 @@ Get-Location
 ```powershell
 ls -Force
 ```
-`Get-ChildItem -Force`
+```bash
+ls -a
+ls -la  ///자세한 정보 표시
+```
 
 ![목록 확인](assets/ls.png)
 
@@ -74,8 +80,9 @@ ls -Force
 ```powershell
 Set-Location 폴더명
 ```
-`cd 폴더명`
-
+```bash
+cd 폴더명
+```
 ![폴더 이동](assets/cd.png)
 
 상위 폴더로 이동:
@@ -89,6 +96,9 @@ cd ..
 ```powershell
 New-Item -ItemType Directory 폴더명
 ```
+```bash
+mkdir 폴더명
+```
 
 ![폴더 만들기](assets/newfolder.png)
 
@@ -96,23 +106,32 @@ New-Item -ItemType Directory 폴더명
 ```powershell
 New-Item -ItemType File 파일명
 ```
+```bash
+touch 파일명
+```
 
 ![파일 만들기](assets/newfile.png)
 - windows 에서는 확장자(.txt)로 파일 종류를 구분
-- rinux 에서는 내용이나 실행방식, 이름으로 구분해 확장자 없이 사용가능
+- linux 에서는 내용이나 실행방식, 이름으로 구분해 확장자 없이 사용가능
 
 ### 4-6. 복사
 ```powershell
 Copy-Item a b
 ```
-
-![복사](assets/copy.png)
-
 폴더 안의 내용까지 복사할 때는 뒤에 `-Recurse`를 붙인다.
+
+```bash
+cp a b
+```
+폴더 안의 내용까지 복사할 때는 cp뒤에 -r을 붙인다
+![복사](assets/copy.png)
 
 ### 4-7. 이동
 ```powershell
 Move-Item 원본 대상경로
+```
+```bash
+mv 원본 대상경로
 ```
 
 ![이동](assets/move.png)
@@ -121,12 +140,20 @@ Move-Item 원본 대상경로
 ```powershell
 Rename-Item 기존이름 새이름
 ```
+```bash
+mv 기존이름 새이름
+```
 
 ![이름변경](assets/rename.png)
 
 ### 4-9. 삭제
 ```powershell
 Remove-Item 파일명
+Remove-Item 폴더명 -Recurse //폴더 안의 내용도 삭제
+```
+```bash
+rm 파일명
+rm -r 폴더명  //폴더를 삭제할 때
 ```
 
 ![삭제](assets/remove.png)
@@ -135,13 +162,18 @@ Remove-Item 파일명
 ```powershell
 Get-Content 파일명
 ```
-`cat 파일명`
+```bash
+cat 파일명
+```
 
 ![파일내용확인](assets/cat.png)
 
 ### 4-11. 빈 파일 생성
 ```powershell
 New-Item -ItemType File 파일명
+```
+```bash
+touch 파일명
 ```
 
 ![빈파일 생성](assets/bin.png)
