@@ -14,7 +14,7 @@
 | Docker version | 29.9.2, build a82e528 |
 | Git version | 2.56.0.windows.4 |
 
-### 2-1 프로젝트 디렉토리 구조
+### 2-1 프로젝트 디렉토리 구조(보너스 문제 풀이로 변경되었음 해당 번호는 참고로만)
 ```
 first_tool/
 ├─ README.md
@@ -747,14 +747,130 @@ docker logs <container_id>
 ```
 
 - **확인 포인트**: 필요한 환경변수가 설정되어 있는지, 로그에 설정 누락 메시지가 있는지 확인한다.
-
+---
 
 ## 보너스 문제(선택)
 
 ### Docker Compose 기초
 매번 긴 docker run 명령을 입력하는 대신, 실행 설정을 docker-compose.yml에 문서화
+```
+first_tool/
+├─ README.md
+├─ Dockerfile
+├─ docker-compose.yml
+├─ app/
+   └─ index.html
+└─ assets/
+```
 
+```powershell
+docker compose up -d --build
+docker compose ps
+```
+---
 ### Docker Compose 멀티 컨테이너
+
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+
+  redis:
+    image: redis:alpine
+```
+
+- web, redis는 서로 다른 컨테이너
+- Compose는 같은 프로젝트 안의 서비스들을 같은 네트워크에 연결
+- 그래서 서비스 이름으로 서로 접근할 수 있다
+- 예: web 컨테이너에서 redis라는 이름으로 Redis에 접근 가능
+
+네트워크 통신 확인 방법
+정확한 확인을 위해서는 웹 서버만으로는 내부 통신이 드러나지 않을 수 있어, 보통 간단한 애플리케이션을 하나 추가해서 테스트
+
+예를 들어 Python Flask 앱이 Redis에 접속하는 형태로 구성할 수 있다.
+하지만 처음 학습이라면, 우선 서비스 이름으로 접근 가능하다는 개념만 알아도 충분
+
+핵심 개념
+- Compose는 서비스 간 DNS를 자동 제공
+- redis라는 이름이 곧 호스트명처럼 동작
+- IP를 직접 외우지 않아도 됨
+
 ### Compose 운영 명령어 습득
+
+실행
+```
+docker compose up -d
+```
+
+종료
+```
+docker compose down
+```
+
+상태확인
+```
+docker compose ps
+```
+
+로그확인
+```
+docker compose logs
+```
+
+실시간 로그확인
+```
+docker compose logs -f
+```
+
+특정 서비스 로그만 확인
+```
+docker compose logs web
+```
+
+---
+
 ### 환경 변수 활용
+환경 변수를 쓰면 설정과 코드를 분리할 수 있다.<p>
+즉, 포트나 모드를 바꾸기 위해 코드를 직접 수정하지 않아도 된다.
+
+
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "${HOST_PORT}:80"
+    environment:
+      - APP_MODE=${APP_MODE}
+```
+
+그리고 같은 폴더에 .env를 넣는다
+```env
+HOST_PORT=8080
+APP_MODE=dev
+```
+장점
+- 포트 변경이 쉬움
+- dev / prod 같은 실행 모드 분리 가능
+- 설정 관리가 편리함
+주의
+- 환경 변수를 Compose 파일에 직접 적어도 되지만,
+- 보통은 .env 파일로 분리하면 더 깔끔.
 ### GitHub SSH 키 설정
+HTTPS 대신 SSH를 쓰면 매번 계정 정보를 입력하지 않아도 되고, 인증을 키 기반으로 관리할 수 있어 편리함
+
+SSH키 생성예시
+```
+ssh-keygen -t ed25519 -C "your_email@example.com"
+~/.ssh/id_ed25519.pub          // 공개키 확인
+ssh -T git@github.com          // 연결테스트
+```
+
+URL을 SSH로 바꾸기
+```
+https://github.com/사용자명/저장소명.git  //기존주소
+git@github.com:사용자명/저장소명.git
+```
+변경 후 push를 하여 확인한다
