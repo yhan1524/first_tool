@@ -55,6 +55,24 @@ first_tool/
 
 ## 4. 터미널 조작 로그
 
+| 기능 | PowerShell | Bash |
+|---|---|---|
+| 현재 위치 확인 | `Get-Location` 또는 `pwd` | `pwd` |
+| 목록 보기 | `Get-ChildItem` 또는 `ls` | `ls` |
+| 숨김 파일 포함 목록 보기 | `ls -Force` | `ls -a` |
+| 폴더 이동 | `Set-Location 폴더명` 또는 `cd 폴더명` | `cd 폴더명` |
+| 상위 폴더로 이동 | `cd ..` | `cd ..` |
+| 폴더 만들기 | `New-Item -ItemType Directory 폴더명` | `mkdir 폴더명` |
+| 파일 만들기 | `New-Item -ItemType File 파일명` | `touch 파일명` |
+| 파일 복사 | `Copy-Item 원본 대상` | `cp 원본 대상` |
+| 폴더 복사 | `Copy-Item 폴더명 대상 -Recurse` | `cp -r 폴더명 대상` |
+| 파일/폴더 이동 | `Move-Item 원본 대상` | `mv 원본 대상` |
+| 이름 변경 | `Rename-Item 기존이름 새이름` | `mv 기존이름 새이름` |
+| 파일 삭제 | `Remove-Item 파일명` | `rm 파일명` |
+| 폴더 삭제 | `Remove-Item 폴더명 -Recurse` | `rm -r 폴더명` |
+| 파일 내용 보기 | `Get-Content 파일명` 또는 `cat 파일명` | `cat 파일명` |
+| 화면 지우기 | `Clear-Host` 또는 `cls` | `clear` |
+
 ### 4-1. 현재위치 확인
 ```powershell
 Get-Location
