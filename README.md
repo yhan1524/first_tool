@@ -264,6 +264,8 @@ echo exit               // 나가기
 ```bash
 mkdir test    // test 폴더 생성
 ```
+![폴더생성](assets/testmk.png)
+
 
 ### 7-5. 포트매핑 실행명령
 ```bash
