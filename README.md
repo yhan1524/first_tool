@@ -233,18 +233,37 @@ docker ps -a
 
 ### 7-3. ubuntu 컨테이너 실행 및 진입
 ```bash
-docker run -it ubuntu bash
+docker run -it ubuntu bash  // ubuntu 이미지에 임의의 컨테이너 생성
+
+```
+
+컨테이너 이름을 직접 설정하려면
+```bash
+docker run -it --name myubuntu ubuntu bash // --name 뒤에 컨테이너 이름 mybuntu
+
+```
+
+이미 생성된 컨테이너에 들어가려면
+```bash
+docker start myubuntu         //컨테이너 실행
+docker exec -it myubuntu bash //컨테이너 진입
+
 ```
 
 ![ubuntu 컨테이너 실행 및 진입](assets/dockerbash.png)
 
 ### 7-4. 컨테이너 진입 후 간단 명령
 ```bash
-ls
-echo exitcur
+ls                      // 현재 위치 안의 폴더목록
+echo inside container   // 문자열 화면 출력
+echo exit               // 나가기
 ```
 
 ![컨테이너 진입 후 간단 명령](assets/dockerls.png)
+
+```bash
+mkdir test    // test 폴더 생성
+```
 
 ### 7-5. 포트매핑 실행명령
 ```bash
