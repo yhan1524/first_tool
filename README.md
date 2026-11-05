@@ -285,6 +285,15 @@ curl http://localhost:8080
 - 웹 서버 베이스 이미지 활용 NGINX/Apache
 - html 수정만 하면 되므로 간단
 
+```bash
+FROM nginx:alpine             //Alpine Linux 위에 NGINX가 미리 설치된 이미지를 사용
+
+COPY app/index.html /usr/share/nginx/html/index.html  //내 프로젝트의 app/index.html 파일을
+컨테이너 내부의 NGINX 기본 웹 문서 경로로 복사
+
+EXPOSE 80   // 사용하는 포트번호
+
+```
 ![호스트 포트 접속](assets/dockercurl.png)
 
 NGINX 컨테이너에서 띄운 CSS로 가운데 정렬된 카드 형태로 꾸며진 정적 웹페이지
