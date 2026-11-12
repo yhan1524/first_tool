@@ -270,7 +270,6 @@ chmod [권한] [파일명]
 
 ![권한 변경](assets/unixchmod.png)
 
-- [권한 상세설명](#14-rwx-permission-mapping)
 ---
 ### 권한 비트 의미
 - `r` = read(읽기)
