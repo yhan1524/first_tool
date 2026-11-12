@@ -108,6 +108,29 @@ cd 폴더명
 cd ..
 ```
 
+### 절대경로와 상대경로
+- **절대경로**: 루트(`/`)부터 시작하는 고정 경로
+- **상대경로**: 현재 작업 위치를 기준으로 하는 경로
+
+### 사용 기준
+- 정확한 위치를 항상 유지해야 하면 → **절대경로**
+- 현재 위치 기준으로 유연하게 이동할 때 → **상대경로**
+- 자동화 스크립트에서는 경로 해석 오류를 줄이기 위해 절대경로를 우선 사용한다
+- 개발 중 빠르게 이동하며 작업할 때는 상대경로가 편리하다.
+
+### 경로 예시
+```bash
+/home/user/project/data.txt   # 절대경로
+./data.txt                    # 상대경로
+../data.txt                   # 상대경로
+```
+### 현재 작업 디렉터리의 절대경로(${PWD})
+```
+echo "hello" > "${PWD}/result.txt"    //Bash
+"hello" | Out-File "$($PWD.Path)\result.txt"   //powershell
+```
+---
+
 ![폴더 이동](assets/cd_up.png)
 
 ### 4-4. 폴더 만들기
@@ -207,6 +230,18 @@ icacls
 
 ![권한 확인](assets/chmod.png)
 
+- (I)       //상속 표기, 부모에게서 상속
+- F	:Full Control	모든 권한
+- M	:Modify	수정 가능, 읽기/쓰기/삭제 가능
+- RX	:Read & Execute	읽기 + 실행 가능
+- R	:Read	읽기 가능
+- W	:Write	쓰기 가능
+- D	:Delete	삭제 가능
+- DC	:Delete Child	하위 항목 삭제 가능
+- RC	:Read Control	권한 정보 읽기
+- WDAC	:Write DAC	권한 설정 변경 가능
+- WO	:Write Owner	소유자 변경 가능
+
 ### 5-1-2. 권한 변경
 ```powershell
 /grant:r
@@ -237,7 +272,40 @@ chmod [권한] [파일명]
 
 - [권한 상세설명](#14-rwx-permission-mapping)
 ---
+### 권한 비트 의미
+- `r` = read(읽기)
+- `w` = write(쓰기)
+- `x` = execute(실행)
 
+### 숫자 매핑
+| 권한 | 값 |
+|---|---:|
+| r | 4 |
+| w | 2 |
+| x | 1 |
+
+### 조합 예시
+| 권한 | 숫자 | 의미 |
+|---|---:|---|
+| rwx | 7 | 읽기 / 쓰기 / 실행 |
+| rw- | 6 | 읽기 / 쓰기 |
+| r-x | 5 | 읽기 / 실행 |
+| r-- | 4 | 읽기 |
+| --- | 0 | 권한 없음 |
+
+### `755` 예시
+- 소유자: `7` = `rwx`
+- 그룹: `5` = `r-x`
+- 기타: `5` = `r-x`
+
+```bash
+chmod 755 script.sh
+ls -l script.sh
+```
+자주 쓰는 권한
+- 755: 실행파일, 스크립트, 디렉터리에 자주 사용
+- 644: 일반문서, 설정 파일에 자주 사용
+---
 
 ## 6. Docker 설치 및 점검
 
@@ -272,6 +340,7 @@ docker run hello-world
 ```
 
 ![hello-world 생성](assets/dockerhello.png)
+> hello-world 라는 이미지를 받아 와 실행
 
 ### 7-2. 이미지 및 컨테이너 목록 확인
 ```bash
@@ -280,10 +349,11 @@ docker ps -a
 ```
 
 ![이미지 및 목록 확인](assets/dockerimg.png)
+> 위에서 hello-world 를 받아와 목록에 hello-world 이미지가 존재하는 것을 확인함
 
 ### 7-3. ubuntu 컨테이너 실행 및 진입
 ```bash
-docker run -it ubuntu bash  // ubuntu 이미지에 임의의 컨테이너 생성
+docker run -it ubuntu bash  // ubuntu 이미지에 임의의 컨테이너 생성, 명령어는 bash셀로 실행
 
 ```
 
@@ -305,30 +375,60 @@ docker exec -it myubuntu bash //컨테이너 진입
 ### 7-4. 컨테이너 진입 후 간단 명령
 ```bash
 ls                      // 현재 위치 안의 폴더목록
-echo inside container   // 문자열 화면 출력
-echo exit               // 나가기
+echo inside container   // 문자열 화면 출력 'inside container'를 출력한다
+exit                    // 나가기
 ```
 
 ![컨테이너 진입 후 간단 명령](assets/dockerls.png)
 
+### 7-5. 컨테이너 종료/유지 차이
+
+> docker run -dit --name test1 nginx bash   //test1이라는 컨테이너를 임의로 설정 후 확인
 ```bash
-mkdir test    // test 폴더 생성
+
+docker attach (컨테이너 이름)
+exit
 ```
-![폴더생성](assets/testmk.png)
+![attach](assets/attachex.png)
+> 컨테이너 종료 확인
 
 
-### 7-5. 포트매핑 실행명령
 ```bash
-docker run -d --name (컨테이너 이름) -p 8080:80
+docker exec -it (컨테이너 이름) bash
+exit
 ```
+![attach](assets/exec.png)
+> 컨테이너는 종료되지 않음 확인
+
+```
+docker attach
+컨테이너의 메인 프로세스에 직접 붙는 것
+즉, 컨테이너 안에서 원래 실행 중인 프로세스 화면을 그대로 본다.
+이 창에서 exit 하거나 Ctrl+C 하면 컨테이너가 종료될 수 있음
+
+docker exec
+이미 실행 중인 컨테이너 안에 새 명령을 하나 더 실행하는 것
+메인 프로세스는 그대로 유지됨
+bash, sh, ls 같은 명령을 별도로 실행할 때 사용
+여기서 exit 해도 컨테이너 자체는 보통 안 꺼짐
+
+```
+
+### 7-6. 포트매핑 실행명령
+```bash
+docker run -d -p 8080:80 (실행 이미지 이름) 
+// 해당 이미지를 사용하는 컨테이너가 자동으로 만들어지고, 그 컨테이너에 포트 매핑도 적용
+// 만든 컨테이너에 포트매핑을 하려면 --name (컨테이너 이름)을 추가한다
+```
+
+- -d = 뒤에서 조용히 실행
+- -it = 직접 들어가서 대화하듯 사용
 
 ![포트매핑 실행명령](assets/dockermapping.png)
 
 ---
 
-## 8. 포트 매핑 접속증거
-
-### 8-1. 호스트 포트 접속
+### 7-7. 호스트 포트 접속
 ```bash
 curl http://localhost:8080
 ```
@@ -350,6 +450,31 @@ NGINX 컨테이너에서 띄운 CSS로 가운데 정렬된 카드 형태로 꾸�
 ![웹확인](assets/pt8080.png)
 
 ---
+
+## 8. 네트워크 네임스페이스
+ 
+네트워크를 서로 분리된 공간으로 만드는 기능
+네트워크 네임스페이스는 충돌 방지, 보안, 독립성 확보를 위해 필요하다
+컨테이너는 호스트와 분리된 네트워크 네임스페이스를 사용하므로, 기본적으로 외부에서 바로 접근할 수 없다
+
+### 호스트모드
+- 컨테이너가 호스트의 네트워크를 그대로 공유한다
+
+### 브리지모드
+- 컨테이너가 호스트와 분리된 별도 네트워크를 사용한다
+- 외부 접근엔 포트 포워딩이 필요
+
+### 포트 포워딩
+호스트의 포트와 컨테이너의 포트를 연결하여 외부 요청을 컨테이너 서비스로 전달하는 접속방법
+
+### 예시 `-p`
+```bash
+docker run -p 8080:80 myimage
+```
+
+- 호스트의 `8080` 포트
+- 컨테이너의 `80` 포트
+- **내 PC의 8080번 포트로 들어온 요청을 컨테이너의 80번 포트로 보냄**
 
 ## 9. Docker 볼륨 영속성 검증
 
@@ -379,46 +504,35 @@ docker exec my-nginx-new cat /usr/share/nginx/html/index.html
 ![데이터 유지 실행결과](assets/dockervolume.png)
 
 ---
+### 비교 표
+| 항목 | 바인드 마운트 | Docker 볼륨 |
+|---|---|---|
+| 연결 방식 | 호스트 경로를 직접 연결 | Docker가 관리하는 저장소 사용 |
+| 장점 | 개발 중 즉시 반영됨 | 관리가 편하고 이식성이 좋음 |
+| 단점 | 호스트 경로에 의존함 | 호스트에서 직접 보기 어려울 수 있음 |
+| 적합한 경우 | 개발 / 디버깅 | 운영 / 데이터 보존 |
 
-## 10. Git 설정 및 GitHub 연동
-### Git 설정
+### 간단 설명
+- **바인드 마운트**는 로컬 파일을 컨테이너에 바로 연결하는 방식이다.
+- **Docker 볼륨**은 Docker가 데이터를 관리하므로 운영 환경에서 사용하기 좋다.
+
+### 예시
 ```bash
-git config --global user.name
-git config --global user.email
-git config --global init.defaultBranch main
-```
-### GitHub 원격 저장소 연결
-```
-git remote add origin https://github.com/username/repository.git
-git remote -v
-```
-### 커밋 및 푸시
-```
-git add .                       // 한번에 커밋하기
-git commit -m "commit message"
-git push -u origin main
-```
-README 파일만 수정하는 경우
-```
-git add README.md          // add 뒤에 수정하고자 하는 파일명 입력
-git commit -m "readme수정"
-git push
-```
+# 바인드 마운트
+docker run -v $(pwd)/data:/app/data myimage
 
-![git 연동 확인](assets/gitlist.png)
-
-### GitHub 에서 컴퓨터로 가져오기(간단)
-```bash
-git config --global user.name
-git config --global user.email
-git clone (github주소)
+# Docker 볼륨
+docker run -v myvolume:/app/data myimage
 ```
-![복사하기](assets/gitclone.png)
+- 개발환경: <br>
+바인드 마운트 우선, 내 PC 소스코드를 컨테이너에 바로 반영하기 위함<br>
+볼륨은 컨테이너를 지워도 데이터가 남아야 할 때 사용함<br>
 
-### GitHub 주소
-https://github.com/yhan1524/first_tool
+- 운영환경: <br>
+볼륨 우선, 호스트의 의존성을 줄이고 데이터의 안정적 저장·백업·이관이 쉬움 <br>
+호스트의 특정 경로를 직접 써야할 때 바인드 마운트를 사용할 수 있음
 
-## 11. 이미지와 컨테이너
+---
 
 ### 이미지와 컨테이너의 차이
 - **이미지(Image)**: 컨테이너를 만들기 위한 실행 템플릿
@@ -480,96 +594,180 @@ docker run -v $(pwd):/app myapp
 
 ---
 
-## 12. Network Namespace and Port Forwarding
+## 10. 도커 컴포즈(보너스)
 
-### 네트워크 네임스페이스
-네트워크를 서로 분리된 공간으로 만드는 기능
-네트워크 네임스페이스는 충돌 방지, 보안, 독립성 확보를 위해 필요하다
-컨테이너는 호스트와 분리된 네트워크 네임스페이스를 사용하므로, 기본적으로 외부에서 바로 접근할 수 없다
+### Docker Compose를 사용하는 이유
 
-### 호스트모드
-- 컨테이너가 호스트의 네트워크를 그대로 공유한다
-### 브리지모드
-- 컨테이너가 호스트와 분리된 별도 네트워크를 사용한다
-- 외부 접근엔 포트 포워딩이 필요
+- 여러 컨테이너를 한번에 관리하기 쉬움
+- 재현이 쉬움
+- 명령어가 간단하여 관리가 쉬움
+> docker run = 하나씩 손으로 켜는 방식
+> docker compose = 전원 스위치 하나로 세트 전체를 켜는 방식
 
-### 포트 포워딩
-호스트의 포트와 컨테이너의 포트를 연결하여 외부 요청을 컨테이너 서비스로 전달하는 접속방법
-
-### 예시 `-p`
-```bash
-docker run -p 8080:80 myimage
+```
+first_tool/
+├─ README.md
+├─ Dockerfile
+├─ docker-compose.yml
+├─ app/
+   └─ index.html
+└─ assets/
 ```
 
-- 호스트의 `8080` 포트
-- 컨테이너의 `80` 포트
-- **내 PC의 8080번 포트로 들어온 요청을 컨테이너의 80번 포트로 보냄**
+```bush
+docker compose up -d --build
+docker compose ps
+```
+![컴포즈실행](assets/composeup.png)
+![컴포즈확인](assets/composeps.png)
+
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+```
+
+![웹페이지 확인](assets/composeweb.png)
+
+### Compose 운영 명령어
+
+실행
+```
+docker compose up -d
+```
+
+종료
+```
+docker compose down
+```
+
+상태확인
+```
+docker compose ps
+```
+
+로그확인
+```
+docker compose logs
+```
+
+실시간 로그확인
+```
+docker compose logs -f
+```
+
+특정 서비스 로그만 확인
+```
+docker compose logs web
+```
+
+### Docker Compose 멀티 컨테이너
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+
+  api:
+    image: python:3.12-alpine
+    command: sh -c "python -m http.server 5000"
+    expose:                             # 컨테이너 내부에서만 사용할 포트 표시
+      - "5000"
+    ports:                              # 호스트에서 확인하고자 포트접속
+      - "5000:5000"
+      
+  tester:                               # 컨테이너를 살아있게 만드는 용도
+    image: alpine:3.20
+    command: sh -c "sleep infinity"
+```
+![업로드](assets/cpsmt.png)
+![확인](assets/cpsmtps.png)
+![포트로 확인](assets/cpshost.png)
+
 ---
 
-## 13. Absolute vs Relative Path
+### 환경 변수 활용
+환경 변수를 쓰면 설정과 코드를 분리할 수 있다.<p>
 
-### 절대경로와 상대경로
-- **절대경로**: 루트(`/`)부터 시작하는 고정 경로
-- **상대경로**: 현재 작업 위치를 기준으로 하는 경로
+- 포트 변경이 쉬움
+- dev / prod 같은 실행 모드 분리 가능
+- 설정 관리가 편리함
 
-### 사용 기준
-- 정확한 위치를 항상 유지해야 하면 → **절대경로**
-- 현재 위치 기준으로 유연하게 이동할 때 → **상대경로**
-- 자동화 스크립트에서는 경로 해석 오류를 줄이기 위해 절대경로를 우선 사용한다
-- 개발 중 빠르게 이동하며 작업할 때는 상대경로가 편리하다.
 
-### 경로 예시
-```bash
-/home/user/project/data.txt   # 절대경로
-./data.txt                    # 상대경로
-../data.txt                   # 상대경로
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "8080:80"
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+    environment:
+      MODE: production
+
+  api:
+    image: python:3.12-alpine
+    command: sh -c "python -m http.server ${PORT:-5000}"
+    expose:
+      - "5000"
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MODE: development
+
+  tester:
+    image: alpine:3.20
+    command: sh -c "sleep infinity"
+    environment:
+      TARGET_HOST: api
+      TARGET_PORT: 5000
 ```
-### 현재 작업 디렉터리의 절대경로(${PWD})
+- 환경변수를 compose 파일에 직접 적어도 되지만 .env 파일로 분리한다
+
+.env를 넣는다
+```env
+PORT=5000
+MODE=development
+WEB_PORT=8080
 ```
-echo "hello" > "${PWD}/result.txt"    //Bash
-"hello" | Out-File "$($PWD.Path)\result.txt"   //powershell
+compose 에서 env 연결하기
+```yaml
+services:
+  web:
+    image: nginx:alpine
+    ports:
+      - "${WEB_PORT}:80"
+    volumes:
+      - ./app:/usr/share/nginx/html:ro
+
+  api:
+    image: python:3.12-alpine
+    command: sh -c "python -m http.server ${PORT}"
+    ports:
+      - "${PORT}:${PORT}"
+    environment:
+      MODE: ${MODE}
+
+  tester:
+    image: alpine:3.20
+    command: sh -c "sleep infinity"
+
 ```
+
+주의
+- .env 파일은 민감정보를 지녀 git에 올리지 않는다
+
 ---
 
-## 14. rwx Permission Mapping
-
-### 권한 비트 의미
-- `r` = read(읽기)
-- `w` = write(쓰기)
-- `x` = execute(실행)
-
-### 숫자 매핑
-| 권한 | 값 |
-|---|---:|
-| r | 4 |
-| w | 2 |
-| x | 1 |
-
-### 조합 예시
-| 권한 | 숫자 | 의미 |
-|---|---:|---|
-| rwx | 7 | 읽기 / 쓰기 / 실행 |
-| rw- | 6 | 읽기 / 쓰기 |
-| r-x | 5 | 읽기 / 실행 |
-| r-- | 4 | 읽기 |
-| --- | 0 | 권한 없음 |
-
-### `755` 예시
-- 소유자: `7` = `rwx`
-- 그룹: `5` = `r-x`
-- 기타: `5` = `r-x`
-
-```bash
-chmod 755 script.sh
-ls -l script.sh
-```
-자주 쓰는 권한
-- 755: 실행파일, 스크립트, 디렉터리에 자주 사용
-- 644: 일반문서, 설정 파일에 자주 사용
-
----
-
-## 15. Port Conflict Troubleshooting
+## 11. Port Conflict Troubleshooting
 ```
 Error response from daemon: driver failed programming external connectivity on endpoint second-nginx (...): Bind for 0.0.0.0:8080 failed: port is already allocated
 ```
@@ -587,11 +785,14 @@ Windows 환경에서 확인
 ```
 netstat -ano | findstr :8080    
 ```
+![포트 사용 확인](assets/netstat.png)
+
 ### 예시 출력
 ```text
 TCP    10.70.102.112:55552    10.60.30.12:8080       ESTABLISHED     1234
 ```
 - PID : 1234
+
 ### 해당 PID가 어떤 프로세스인지 확인
 ```
 ps -p 1234 -f
@@ -625,240 +826,49 @@ Windows 환경에서 확인
 netstat -ano | findstr :8080    
 ```
 
-### 정리
-- 확인 → 식별 → 종료 → 재확인 순서로 기록한다.
-- 실제 실행 로그를 함께 첨부하면 신뢰도가 높아진다.
-
 ---
 
-## 16. Bind Mount vs Docker Volume
-
-### 비교 표
-| 항목 | 바인드 마운트 | Docker 볼륨 |
-|---|---|---|
-| 연결 방식 | 호스트 경로를 직접 연결 | Docker가 관리하는 저장소 사용 |
-| 장점 | 개발 중 즉시 반영됨 | 관리가 편하고 이식성이 좋음 |
-| 단점 | 호스트 경로에 의존함 | 호스트에서 직접 보기 어려울 수 있음 |
-| 적합한 경우 | 개발 / 디버깅 | 운영 / 데이터 보존 |
-
-### 간단 설명
-- **바인드 마운트**는 로컬 파일을 컨테이너에 바로 연결하는 방식이다.
-- **Docker 볼륨**은 Docker가 데이터를 관리하므로 운영 환경에서 사용하기 좋다.
-
-### 예시
+## 12. Git 설정 및 GitHub 연동
+### Git 설정
 ```bash
-# 바인드 마운트
-docker run -v $(pwd)/data:/app/data myimage
-
-# Docker 볼륨
-docker run -v myvolume:/app/data myimage
+git config --global user.name
+git config --global user.email
+git config --global init.defaultBranch main
 ```
-- 개발환경: <br>
-바인드 마운트 우선, 내 PC 소스코드를 컨테이너에 바로 반영하기 위함<br>
-볼륨은 컨테이너를 지워도 데이터가 남아야 할 때 사용함<br>
+### GitHub 원격 저장소 연결
+```
+git remote add origin https://github.com/username/repository.git
+git remote -v
+```
+### 커밋 및 푸시
+```
+git add .                       // 한번에 커밋하기
+git commit -m "commit message"
+git push -u origin main
+```
+README 파일만 수정하는 경우
+```
+git add README.md          // add 뒤에 수정하고자 하는 파일명 입력
+git commit -m "readme수정"
+git push
+```
 
-- 운영환경: <br>
-볼륨 우선, 호스트의 의존성을 줄이고 데이터의 안정적 저장·백업·이관이 쉬움 <br>
-호스트의 특정 경로를 직접 써야할 때 바인드 마운트를 사용할 수 있음
+![git 연동 확인](assets/gitlist.png)
 
----
-
-## 17. Troubleshooting Case
-
-### 17-1. 컨테이너 포트 접속 실패
-
-- **문제 상황**: 브라우저에서 `http://localhost:8080` 접속이 되지 않는다.
-- **가설**: 호스트의 `8080` 포트가 이미 사용 중이라 컨테이너가 포트 바인딩에 실패했을 것이다.
-- **검증 명령어**:
-
+### GitHub 에서 컴퓨터로 가져오기(간단)
 ```bash
-lsof -i :8080
+git config --global user.name
+git config --global user.email
+git clone (github주소)
 ```
+![복사하기](assets/gitclone.png)
 
-- **확인 포인트**: `8080` 포트를 사용 중인 프로세스가 있는지 확인한다.
-- ESTABLISHED
+### GitHub 주소
+https://github.com/yhan1524/first_tool
 
 ---
 
-### 17-2. 컨테이너가 실행되지 않음
-
-- **문제 상황**: 컨테이너를 실행했지만 바로 종료된다.
-- **가설**: 실행 명령어나 설정 오류로 인해 컨테이너가 정상적으로 시작되지 않았을 것이다.
-- **검증 명령어**:
-
-```bash
-docker ps -a
-docker logs <container_id>
-```
-
-- **확인 포인트**: 종료 상태인지, 로그에 에러 메시지가 있는지 확인한다.
-
----
-
-### 17-3. 웹 페이지가 열리지 않음
-
-- **문제 상황**: 컨테이너는 실행 중이지만 외부에서 접속이 되지 않는다.
-- **가설**: 애플리케이션이 `0.0.0.0`이 아니라 `localhost`에만 바인딩되어 있을 것이다.
-- **검증 명령어**:
-
-```bash
-docker exec -it <container_id> netstat -tuln
-```
-
-또는
-
-```bash
-docker logs <container_id>
-```
-
-- **확인 포인트**: 서버가 어떤 주소로 바인딩되어 있는지 확인한다.
-
----
-
-### 17-4. 데이터베이스 연결 실패
-
-- **문제 상황**: 애플리케이션이 DB에 연결되지 않는다.
-- **가설**: DB 호스트명 또는 포트 설정이 잘못되어 연결에 실패했을 것이다.
-- **검증 명령어**:
-
-```bash
-docker exec -it <container_id> ping <db_host>
-```
-
-또는
-
-```bash
-docker exec -it <container_id> nc -zv <db_host> 5432
-```
-
-- **확인 포인트**: DB 서버에 네트워크 접근이 가능한지 확인한다.
-
----
-
-### 17-5. 빌드는 성공했지만 실행 시 에러 발생
-
-- **문제 상황**: 이미지는 잘 빌드되었지만 실행하면 오류가 난다.
-- **가설**: 환경변수나 설정 파일이 누락되어 실행에 필요한 값이 없을 것이다.
-- **검증 명령어**:
-
-```bash
-docker inspect <container_id>
-docker logs <container_id>
-```
-
-- **확인 포인트**: 필요한 환경변수가 설정되어 있는지, 로그에 설정 누락 메시지가 있는지 확인한다.
----
-
-## 보너스 문제(선택)
-
-### Docker Compose 기초
-매번 긴 docker run 명령을 입력하는 대신, 실행 설정을 docker-compose.yml에 문서화
-```
-first_tool/
-├─ README.md
-├─ Dockerfile
-├─ docker-compose.yml
-├─ app/
-   └─ index.html
-└─ assets/
-```
-
-```powershell
-docker compose up -d --build
-docker compose ps
-```
----
-### Docker Compose 멀티 컨테이너
-
-```yaml
-services:
-  web:
-    image: nginx:alpine
-    ports:
-      - "8080:80"
-
-  redis:
-    image: redis:alpine
-```
-
-- web, redis는 서로 다른 컨테이너
-- Compose는 같은 프로젝트 안의 서비스들을 같은 네트워크에 연결
-- 그래서 서비스 이름으로 서로 접근할 수 있다
-- 예: web 컨테이너에서 redis라는 이름으로 Redis에 접근 가능
-
-네트워크 통신 확인 방법
-정확한 확인을 위해서는 웹 서버만으로는 내부 통신이 드러나지 않을 수 있어, 보통 간단한 애플리케이션을 하나 추가해서 테스트
-
-예를 들어 Python Flask 앱이 Redis에 접속하는 형태로 구성할 수 있다.
-하지만 처음 학습이라면, 우선 서비스 이름으로 접근 가능하다는 개념만 알아도 충분
-
-핵심 개념
-- Compose는 서비스 간 DNS를 자동 제공
-- redis라는 이름이 곧 호스트명처럼 동작
-- IP를 직접 외우지 않아도 됨
-
-### Compose 운영 명령어 습득
-
-실행
-```
-docker compose up -d
-```
-
-종료
-```
-docker compose down
-```
-
-상태확인
-```
-docker compose ps
-```
-
-로그확인
-```
-docker compose logs
-```
-
-실시간 로그확인
-```
-docker compose logs -f
-```
-
-특정 서비스 로그만 확인
-```
-docker compose logs web
-```
-
----
-
-### 환경 변수 활용
-환경 변수를 쓰면 설정과 코드를 분리할 수 있다.<p>
-즉, 포트나 모드를 바꾸기 위해 코드를 직접 수정하지 않아도 된다.
-
-
-```yaml
-services:
-  web:
-    image: nginx:alpine
-    ports:
-      - "${HOST_PORT}:80"
-    environment:
-      - APP_MODE=${APP_MODE}
-```
-
-그리고 같은 폴더에 .env를 넣는다
-```env
-HOST_PORT=8080
-APP_MODE=dev
-```
-장점
-- 포트 변경이 쉬움
-- dev / prod 같은 실행 모드 분리 가능
-- 설정 관리가 편리함
-주의
-- 환경 변수를 Compose 파일에 직접 적어도 되지만,
-- 보통은 .env 파일로 분리하면 더 깔끔.
-### GitHub SSH 키 설정
+### GitHub SSH 키 설정(보너스)
 HTTPS 대신 SSH를 쓰면 매번 계정 정보를 입력하지 않아도 되고, 인증을 키 기반으로 관리할 수 있어 편리함
 
 SSH키 생성예시
