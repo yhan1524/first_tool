@@ -871,12 +871,30 @@ https://github.com/yhan1524/first_tool
 ### GitHub SSH 키 설정(보너스)
 HTTPS 대신 SSH를 쓰면 매번 계정 정보를 입력하지 않아도 되고, 인증을 키 기반으로 관리할 수 있어 편리함
 
-SSH키 생성예시
+SSH키 생성
 ```
 ssh-keygen -t ed25519 -C "your_email@example.com"
-~/.ssh/id_ed25519.pub          // 공개키 확인
-ssh -T git@github.com          // 연결테스트
+eval "$(ssh-agent -s)"          // SSH 에이전트 실행
+ssh-add ~/.ssh/id_ed25519       // 개인키 에이전트 추가
+cat ~/.ssh/id_ed25519.pub       // 공개키 확인
+> 여기 출력된 내용 복사
 ```
+
+Github 에서 SSH키 등록
+- 설정에서 SSH and GPG keys
+- SSH keys > New SSH key
+
+![SSH](assets/ssh.png)
+
+- title을 지정
+- key에 복사한 공개키를 넣고 add SSH key
+
+연결테스트
+```bash
+ssh -T git@github.com
+```
+![SSH 연결 테스트](assets/ssht.png)
+> 처음 실행시 yes 를 입력해야할 수 있음
 
 URL을 SSH로 바꾸기
 ```
