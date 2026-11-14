@@ -828,13 +828,48 @@ netstat -ano | findstr :8080
 
 
 ### docker 를 찾지 못함
+
 처음 설치 후 기존 작성하던 VScode에서 실행하는 경우 에러 발생
 ```bash
 doker info
 docker: command not found
 ```
-VScode 종료 후 재실행시 정상작동함
+ > VScode 종료 후 재실행시 정상작동함
 
+### compose 오류
+```bash
+$ docker compose up -d
+WARN[0000] The "WEB_PORT" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "PORT" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "PORT" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "PORT" variable is not set. Defaulting to a blank string. 
+WARN[0000] The "MODE" variable is not set. Defaulting to a blank string. 
+no port specified: :<empty>
+
+What's next:
+    Debug this Compose error with Gordon → docker ai "help me fix this compose error"
+```
+ .env 파일이나 실행 환경에 WEB_PORT, PORT가 없으면 Docker가 빈 문자열로 처리해서 :<empty>
+> .env 파일을 생성
+
+```env
+WEB_PORT=3000
+PORT=8080
+MODE=dev
+```
+다시 compose 하면 정상작동함
+
+```bash
+$ docker compose up -d
+[+] up 19/19
+ ✔ Image nginx:alpine            Pulled                    5.4s
+ ✔ Image python:3.12-alpine      Pulled                    5.4s
+ ✔ Image alpine:3.20             Pulled                    4.1s
+ ✔ Network first_tool_default    Created                   0.0s
+ ✔ Container first_tool-web-1    Started                   0.5s
+ ✔ Container first_tool-api-1    Started                   0.6s
+ ✔ Container first_tool-tester-1 Started    
+```
 
 ---
 
