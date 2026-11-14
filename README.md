@@ -825,7 +825,7 @@ Windows 환경에서 확인
 netstat -ano | findstr :8080    
 ```
 
----
+
 
 ### docker 를 찾지 못함
 처음 설치 후 기존 작성하던 VScode에서 실행하는 경우 에러 발생
@@ -834,6 +834,8 @@ doker info
 docker: command not found
 ```
 VScode 종료 후 재실행시 정상작동함
+
+
 ---
 
 ## 12. Git 설정 및 GitHub 연동
