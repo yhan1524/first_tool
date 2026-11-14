@@ -836,6 +836,17 @@ docker: command not found
 ```
  > VScode 종료 후 재실행시 정상작동함
 
+```bash
+$ docker info
+Client:
+ Version:    29.9.3
+ Context:    desktop-linux
+ Debug Mode: false
+ Plugins:
+ ...
+```
+
+
 ### compose 오류
 ```bash
 $ docker compose up -d
