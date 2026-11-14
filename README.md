@@ -766,7 +766,7 @@ services:
 
 ---
 
-## 11. Port Conflict Troubleshooting
+## 11. 트러블슈팅
 ```
 Error response from daemon: driver failed programming external connectivity on endpoint second-nginx (...): Bind for 0.0.0.0:8080 failed: port is already allocated
 ```
@@ -825,6 +825,15 @@ Windows 환경에서 확인
 netstat -ano | findstr :8080    
 ```
 
+---
+
+### docker 를 찾지 못함
+처음 설치 후 기존 작성하던 VScode에서 실행하는 경우 에러 발생
+```bash
+doker info
+docker: command not found
+```
+VScode 종료 후 재실행시 정상작동함
 ---
 
 ## 12. Git 설정 및 GitHub 연동
